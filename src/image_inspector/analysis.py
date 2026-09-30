@@ -15,7 +15,7 @@ def img_info(img):
 
 def calculate_brightness(img):
     img_hsv = processing.to_hsv(img)
-    
+
     value = img_hsv[:,:,2]
 
     return value.sum()/value.size
@@ -24,7 +24,7 @@ def calculate_channel_means(img):
     
     match img.ndim:
         case 2:
-            return {"B": calculate_brightness(img)}
+            return {"brightness": calculate_brightness(img)}
         case 3:
             means = img.mean(axis=(0,1))
             return {
