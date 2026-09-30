@@ -15,7 +15,7 @@ def img_info(img):
 
 def calculate_brightness(img):
     img_hsv = processing.to_hsv(img)
-
+    
     value = img_hsv[:,:,2]
 
     return value.sum()/value.size
