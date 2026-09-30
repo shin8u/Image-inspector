@@ -29,4 +29,12 @@ def threshold(img, threshold_value):
 
         return thresh
         
+def detect_edges(img, low_threshold, high_threshold):
+        if low_threshold < 0 or low_threshold >= high_threshold or high_threshold > 255:
+                raise ValueError("Неверно подобраны пороги.")
 
+        gray_img = to_grayscale(img)
+
+        edges = cv2.Canny(gray_img, low_threshold, high_threshold)
+
+        return edges

@@ -36,3 +36,39 @@ def test_threshold_invalid_value():
 
     with pytest.raises(ValueError):
         threshold(img, -1)
+
+def test_detect_edges():
+    img = np.array([
+        [0, 0, 0, 0, 0],
+        [0, 255, 255, 255, 0],
+        [0, 255, 255, 255, 0],
+        [0, 255, 255, 255, 0],
+        [0, 0, 0, 0, 0]
+        ], dtype=np.uint8)
+
+    result = detect_edges(img, 100, 200)
+
+    flag_zeros_max = 0
+    flag_is_max = 0
+
+    for i in result:
+        for j in i:
+            if j != 0 and j != 255:
+                flag_zeros_max = 1
+            if j == 255:
+                flag_is_max = 1
+ 
+    assert result.ndim == 2
+    assert flag_zeros_max == 0
+    assert flag_is_max == 1
+
+def test_detect_edges_valid_value():
+    img = np.array([
+            [0, 0, 0, 0, 0],
+            [0, 255, 255, 255, 0],
+            [0, 255, 255, 255, 0],
+            [0, 255, 255, 255, 0],
+            [0, 0, 0, 0, 0]
+            ], dtype=np.uint8)
+    with pytest.raises(ValueError):
+        detect_edges(img, 100, 100)
