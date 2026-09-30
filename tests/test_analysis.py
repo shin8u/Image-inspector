@@ -13,19 +13,19 @@ def test_img_info():
     assert result["channels"] == 3
     assert result["dtype"] == "uint8"
 
-def test_calculate_brightness_black():
+def test_calculate_brightness_hsv_black():
     img = np.zeros((100,200,3), dtype=np.uint8)
-    result = calculate_brightness(img)
+    result = calculate_brightness_hsv(img)
 
     assert result == 0
 
-def test_calculate_brightness_known_value():
+def test_calculate_brightness_hsv_known_value():
     img = np.array([
     [[10, 20, 30], [40, 50, 60]],
     [[70, 80, 90], [100, 50, 20]]
     ], dtype=np.uint8)
 
-    result = calculate_brightness(img)
+    result = calculate_brightness_hsv(img)
 
     assert result == 70
 
@@ -60,13 +60,13 @@ def test_calculate_channel_means_grayscale():
 
     assert result["brightness"] == 55
 
-def test_calculate_brightness_histogram():
+def test_calculate_brightness_histogram_hsv():
     img = np.array([
         [[10, 20, 30], [40, 50, 60]],
         [[70, 80, 90], [100, 50, 20]]
         ], dtype=np.uint8)
 
-    result = calculate_brightness_histogram(img)
+    result = calculate_brightness_histogram_hsv(img)
 
     assert result[30] == 1
     assert result[60] == 1
@@ -74,3 +74,32 @@ def test_calculate_brightness_histogram():
     assert result[100] == 1
     assert sum(result) == 4
 
+def test_calculate_brightness_grayscale_black():
+    img = np.zeros((100,200,3), dtype=np.uint8)
+    result = calculate_brightness_grayscale(img)
+
+    assert result == 0
+
+def test_calculate_brightness_grayscale_known_value():
+    img = np.array([
+    [[10, 20, 30], [40, 50, 60]],
+    [[70, 80, 90], [100, 50, 20]]
+    ], dtype=np.uint8)
+
+    result = calculate_brightness_grayscale(img)
+
+    assert result == 50.75
+
+def test_calculate_brightness_histogram_grayscale():
+    img = np.array([
+        [[10, 20, 30], [40, 50, 60]],
+        [[70, 80, 90], [100, 50, 20]]
+        ], dtype=np.uint8)
+
+    result = calculate_brightness_histogram_grayscale(img)
+
+    assert result[22] == 1
+    assert result[52] == 1
+    assert result[82] == 1
+    assert result[47] == 1
+    assert sum(result) == 4
