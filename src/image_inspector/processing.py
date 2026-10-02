@@ -38,3 +38,8 @@ def detect_edges(img, low_threshold, high_threshold):
         edges = cv2.Canny(gray_img, low_threshold, high_threshold)
 
         return edges
+
+def find_contours(mask):
+        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        return contours

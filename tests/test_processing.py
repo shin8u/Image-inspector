@@ -72,3 +72,30 @@ def test_detect_edges_valid_value():
             ], dtype=np.uint8)
     with pytest.raises(ValueError):
         detect_edges(img, 100, 100)
+
+def test_find_contours_black():
+    mask = np.zeros((100,200), dtype=np.uint8)
+
+    result = find_contours(mask)
+
+    assert len(result) == 0
+
+def test_find_contours_obj():
+    mask = np.array([
+            [0, 0, 0, 0, 0],
+            [0, 255, 255, 255, 0],
+            [0, 255, 255, 255, 0],
+            [0, 255, 255, 255, 0],
+            [0, 0, 0, 0, 0]
+            ], dtype=np.uint8)
+
+    result = find_contours(mask)
+
+
+    assert np.array_equal(result[0][0][0], [1, 1])
+    assert np.array_equal(result[0][1][0], [1, 3])
+    assert np.array_equal(result[0][2][0], [3, 3])
+    assert np.array_equal(result[0][3][0], [3, 1])
+    assert len(result) == 1
+
+
